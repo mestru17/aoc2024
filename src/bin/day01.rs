@@ -10,21 +10,9 @@ use rayon::{
     slice::ParallelSliceMut,
 };
 
-fn main() -> Result<()> {
-    let input_file = "input/01.txt";
-
-    let (list1, list2) = read_input(input_file)
-        .with_context(|| format!("Failed to read input from file: {}", input_file))?;
-
-    let distance = distance(&mut list1.clone(), &mut list2.clone())
-        .context("Failed to calculate distance of lists")?;
-
-    println!("distance: {}", distance);
-
-    let similarity = similarity(&list1, &list2);
-    println!("similarity: {}", similarity);
-
-    Ok(())
+fn parse_u32(s: &str) -> Result<u32> {
+    s.parse()
+        .with_context(|| format!("Failed to parse u32: {}", s))
 }
 
 fn read_input(file: &str) -> Result<(Vec<u32>, Vec<u32>)> {
@@ -50,11 +38,6 @@ fn read_input(file: &str) -> Result<(Vec<u32>, Vec<u32>)> {
     }
 
     Ok((list1, list2))
-}
-
-fn parse_u32(s: &str) -> Result<u32> {
-    s.parse()
-        .with_context(|| format!("Failed to parse u32: {}", s))
 }
 
 fn distance(list1: &mut [u32], list2: &mut [u32]) -> Result<u32> {
@@ -85,4 +68,21 @@ fn similarity(list1: &[u32], list2: &[u32]) -> u32 {
         .cloned()
         .map(|x| x * list2_counts.get(&x).unwrap_or(&0))
         .sum()
+}
+
+fn main() -> Result<()> {
+    let input_file = "input/day01.txt";
+
+    let (list1, list2) = read_input(input_file)
+        .with_context(|| format!("Failed to read input from file: {}", input_file))?;
+
+    let distance = distance(&mut list1.clone(), &mut list2.clone())
+        .context("Failed to calculate distance of lists")?;
+
+    println!("distance: {}", distance);
+
+    let similarity = similarity(&list1, &list2);
+    println!("similarity: {}", similarity);
+
+    Ok(())
 }
