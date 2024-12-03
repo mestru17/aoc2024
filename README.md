@@ -7,5 +7,8 @@
     - [x] Part One
     - [ ] Part two
 - [ ] Day 3
+    - [x] Part One
+    - [ ] Part two
+- [ ] Day 4
     - [ ] Part One
     - [ ] Part two
